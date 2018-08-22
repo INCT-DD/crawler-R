@@ -35,7 +35,7 @@ df<-data.frame()
 
 #Tracking data
 for (p in profile){
-    print(paste('Coletando informações sobre @',p,'...'))
+    print(paste('Coletando informaÃ§Ãµes sobre @',p,'...'))
     profile <- getUser(p)
           
     #Tracking data of friends
