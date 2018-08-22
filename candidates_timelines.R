@@ -51,8 +51,8 @@ timelines %>%
     plot.title = ggplot2::element_text(face = "bold")) +
   ggplot2::labs(
     x = NULL, y = NULL,
-    title = "Frequência de tweets publicados por candidatos às eleições 2018",
-    subtitle = "Número de publicações por mês",
+    title = "FrequÃªncia de tweets publicados por candidatos Ã s eleiÃ§Ãµes 2018",
+    subtitle = "NÃºmero de publicaÃ§Ãµes por mÃªs",
     caption = "\nSource: Data collected from Twitter's REST API via rtweet"
   )
 
