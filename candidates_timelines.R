@@ -4,20 +4,10 @@ library("rtweet")
 library("mongolite")
 library("dplyr")
 
-# TWITTER AUTH DATA
+#Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
+source(infos.R)
+source(config.R)
 
-appName <- ""
-consumerKey <- ""
-consumerSecret <- ""
-accessToken <- ""
-accessTokenSecret <- ""
-
-# MONGODB AUTH DATA
-
-mongoUser <- ""
-mongoPasswd <- ""
-mongoHost <- "127.0.0.1"
-mongoPort <- 27017
 
 # APP PERSISTENCE DATA
 
@@ -25,15 +15,11 @@ dbName <- "timelinesdb"
 dbCollection <- "timelines"
 
 
-candidates <- c("33374761", "74215006", "762402774260875265", "128372940", "2670726740", 
-                "105155795", "870030409890910210","256730310", "73745956", "73889361",
-                "989899804200325121")
-
 # Statistical information
-infocand <- lookup_users(candidates)
+infocand <- lookup_users(candidates_ids)
 
 # Timelines
-timelines<-get_timelines(candidates, n=3200)
+timelines<-get_timelines(candidates_ids, n=3200)
 c <- as.matrix(timelines)
 write.csv(c,'timelines.csv')
 
@@ -51,17 +37,13 @@ timelines %>%
     plot.title = ggplot2::element_text(face = "bold")) +
   ggplot2::labs(
     x = NULL, y = NULL,
-    title = "Frequência de tweets publicados por candidatos às eleições 2018",
-    subtitle = "Número de publicações por mês",
+    title = "Frequencia de tweets publicados por candidatos nas eleicoes 2018",
+    subtitle = "Numero de publicacoes por mes",
     caption = "\nSource: Data collected from Twitter's REST API via rtweet"
   )
 
-# DATABASE CONNECTION
 
-mongoUrl <- URLencode(paste0("mongodb://",
-                             mongoUser, ":", mongoPasswd,
-                             "@", mongoHost, ":", mongoPort)
-)
+# DATABASE CONNECTION
 
 mongoConnection <- mongo(db = dbName,
                          collection = dbCollection,
