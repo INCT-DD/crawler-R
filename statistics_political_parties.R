@@ -2,7 +2,11 @@
 
 library("rtweet")
 library("mongolite")
+
+
+#Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
 source(config.R)
+source(infos.R)
 
 # APP PERSISTENCE DATA
 
@@ -23,12 +27,6 @@ quant_part <- data.frame(info_political_party$user_id, info_political_party$scre
 
 
 # DATABASE CONNECTION
-
-mongoUrl <- URLencode(paste0("mongodb://",
-                             mongoUser, ":", mongoPasswd,
-                             "@", mongoHost, ":", mongoPort)
-)
-
 
 mongoConnection <- mongo(db = dbName,
                          collection = dbCollection,
