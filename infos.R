@@ -1,15 +1,14 @@
 # Candidates infos
 cadidates_names <- c("Ciro Gomes", "Geraldo Alckmin", "Guilherme Boulos", "Jair Bolsonaro", 
-                     "Luiz Inacio Lula da Silva", "Fernando Haddad", "Marina Silva", 
-                     "Henrique Meirelles", "Joao Amoedo", "Alvaro Dias", "Jose Maria Eymael",
+                     "Luiz Inácio Lula da Silva", "Fernando Haddad", "Marina Silva", 
+                     "Henrique Meirelles", "João Amoêdo", "Álvaro Dias", "José Maria Eymael",
                      "Cabo Daciolo")
-
-profile <- c("cirogomes","geraldoalckmin", "GuilhermeBoulos","jairbolsonaro", "LulaOficial", "Haddad_Fernando","MarinaSilva", "meirelles", "joaoamoedonovo","alvarodias_", "Eymaeloficial", "CaboDaciolo")
 
 candidates_ids <- c("33374761", "74215006", "762402774260875265", "128372940", "2670726740","354095556","105155795", 
                     "870030409890910210","256730310","73745956", "73889361", "989899804200325121")
 
-df_candidates <- data.frame(cadidates_names,profile, candidates_ids)
+df_candidates <- data.frame(cadidates_names,candidates_ids)
+
 
 
 

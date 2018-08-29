@@ -1,21 +1,41 @@
 library(twitteR)
 library(mongolite)
 
-#Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
-source(config.R)
-source(infos.R)
+appName <- ""
+consumerKey <- ""
+consumerSecret <- ""
+accessToken <- ""
+accessTokenSecret <- ""
+
+# PERFORM TWITTER AUTH
+
+oauthData <- setup_twitter_oauth(consumer_key = consumerKey,
+                          consumer_secret = consumerSecret,
+                          access_token = accessToken,
+                          access_secret = accessTokenSecret)
+
+# MONGODB AUTH DATA
+
+mongoUser <- ""
+mongoPasswd <- ""
+mongoHost <- "127.0.0.1"
+mongoPort <- 27017
 
 # APP PERSISTENCE DATA
 
 dbName <- "friendslistdb"
 dbCollection <- "friendslist"
+
+
+#candidate profile
+profile <- c( "geraldoalckmin", "jairbolsonaro", "LulaOficial", "Haddad_Fernando","MarinaSilva", "joaoamoedonovo","alvarodias_", "Eymaeloficial")
                     
 #DataFrame 
 df<-data.frame()
 
 #Tracking data
 for (p in profile){
-    print(paste('Coletando informacoes sobre @',p,'...'))
+    print(paste('Coletando informações sobre @',p,'...'))
     profile <- getUser(p)
           
     #Tracking data of friends
@@ -36,6 +56,13 @@ colnames(df) <-c('Source', 'Target')
 write.csv(df,'redeamigos_candidatos.csv')
 
 # DATABASE CONNECTION
+
+mongoUrl <- URLencode(paste0("mongodb://",
+                             mongoUser, ":", mongoPasswd,
+                             "@", mongoHost, ":", mongoPort)
+)
+
+
 mongoConnection <- mongo(db = dbName,
                          collection = dbCollection,
                          url = mongoUrl)

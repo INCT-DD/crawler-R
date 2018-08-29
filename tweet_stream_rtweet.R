@@ -3,8 +3,20 @@
 library("rtweet")
 library("mongolite")
 
-#Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
-source(config.R)
+# TWITTER AUTH DATA
+
+appName <- ""
+consumerKey <- ""
+consumerSecret <- ""
+accessToken <- ""
+accessTokenSecret <- ""
+
+# MONGODB AUTH DATA
+
+mongoUser <- ""
+mongoPasswd <- ""
+mongoHost <- "127.0.0.1"
+mongoPort <- 27017
 
 # APP TRACKING DATA
 
@@ -18,6 +30,14 @@ trackParse <- FALSE
 
 dbName <- "debateredetv"
 dbCollection <- "tweets"
+
+# PERFORM TWITTER AUTH
+
+oauthData <- create_token(app = appName,
+                          consumer_key = consumerKey,
+                          consumer_secret = consumerSecret,
+                          access_token = accessToken,
+                          access_secret = accessTokenSecret)
 
 # CONSUME TWITTER STREAMING API
 
@@ -36,8 +56,13 @@ dataStream.df <- parse_stream(dataPath)
 
 print(dataStream)
 
-
 # DATABASE CONNECTION
+
+mongoUrl <- URLencode(paste0("mongodb://",
+                             mongoUser, ":", mongoPasswd,
+                             "@", mongoHost, ":", mongoPort)
+)
+
 
 mongoConnection <- mongo(db = dbName,
                          collection = dbCollection,
