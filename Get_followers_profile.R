@@ -5,29 +5,10 @@ library("mongolite")
 library("jsonlite")
 
 
-# TWITTER AUTH DATA
+#Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
+source(config.R)
+source(infos.R)
 
-appName <- ""
-consumerKey <- ""
-consumerSecret <- ""
-accessToken <- ""
-accessTokenSecret <- ""
-
-
-# PERFORM TWITTER AUTH
-
-oauthData <- create_token(consumer_key = consumerKey,
-                          consumer_secret = consumerSecret,
-                          access_token = accessToken,
-                          access_secret = accessTokenSecret)
-
-
-
-# MONGODB AUTH DATA
-mongoUser <- ""
-mongoPasswd <- ""
-mongoHost <- ""
-mongoPort <- 27017
 
 # Database with Followers ids
 

@@ -4,20 +4,24 @@ library("rtweet")
 library("mongolite")
 
 #Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
-source(config.R)
+source(config)
 
 # APP TRACKING DATA
 
-trackKeyword <- "#DebateRedeTV"
-trackFileName <- "DebateRedeTV"
-trackTimeout <- 60*60*4
+args <- commandArgs(trailingOnly=TRUE)
+
+trackKeyword <- args[1]
+trackFileName <- args[1]
+trackTimeout <- as.numeric(args[2])
+print(trackTimeout)
 trackVerbose <- TRUE
-trackParse <- FALSE
+trackParse <- TRUE
+
 
 # APP PERSISTENCE DATA
 
-dbName <- "debateredetv"
-dbCollection <- "tweets"
+dbName <- paste0(args[3], "db")
+dbCollection <- args[3]
 
 # CONSUME TWITTER STREAMING API
 
@@ -34,7 +38,6 @@ dataPath <- paste0(trackFileName, ".json")
 
 dataStream.df <- parse_stream(dataPath)
 
-print(dataStream)
 
 
 # DATABASE CONNECTION

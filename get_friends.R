@@ -1,39 +1,36 @@
-library(twitteR)
-library(mongolite)
+# LOAD LIBRARIES
+
+library("rtweet")
+library("mongolite")
+
 
 #Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
 source(config.R)
 source(infos.R)
 
+
 # APP PERSISTENCE DATA
 
 dbName <- "friendslistdb"
 dbCollection <- "friendslist"
-                    
-#DataFrame 
+
 df<-data.frame()
-
-#Tracking data
-for (p in profile){
-    print(paste('Coletando informacoes sobre @',p,'...'))
-    profile <- getUser(p)
-          
-    #Tracking data of friends
-    id_friends<- profile$getFriends(retryOnRateLimit=120)
-    friends_list<- c()
-    
-    for (i in id_friends){
-      friends_list <- append(x=friends_list,values=i$screenName)
-    }
-            
-    df<-rbind(df,cbind(profile$screenName, friends_list))
+for (p in candidates_ids){
+  
+  #Tracking data of friends
+  p<- lookup_users(p)
+  id_friends<- get_friends(p$user_id, retryonratelimit = FALSE)
+  friends_list<- c()
+  
+  for (i in id_friends){
+    friend= lookup_users(i)
+    friends_list <- append(x=friends_list,values=friend$screen_name)
+  }
+  
+  df<-rbind(df,cbind(p$screen_name, friends_list))
 }
-                    
+
 colnames(df) <-c('Source', 'Target')
-
-#Save as csv
-
-write.csv(df,'redeamigos_candidatos.csv')
 
 # DATABASE CONNECTION
 mongoConnection <- mongo(db = dbName,

@@ -2,27 +2,23 @@
 
 library("rtweet")
 library("mongolite")
-library("dplyr")
 
 #Inform which directory is the file.(source('~/git/crawler-R/infos.R'))
-#source(infos.R)
 source(config.R)
-
+source(infos.R)
 
 # APP PERSISTENCE DATA
 
 dbName <- "timelinesdb"
 dbCollection <- "timelines"
 
-cand_ids <- commandArgs(trailingOnly=TRUE)
 
-# Statistical information
-infocand <- lookup_users(cand_ids)
+#Argumentos
+args <- commandArgs(trailingOnly=TRUE)
+candidates <- args[1]
 
 # Timelines
-timelines<-get_timelines(cand_ids, n=3200)
-c <- as.matrix(timelines)
-write.csv(c,'timelines.csv')
+timelines<-get_timelines(candidates, n=3200)
 
 # Chart plotting
 
@@ -38,13 +34,17 @@ timelines %>%
     plot.title = ggplot2::element_text(face = "bold")) +
   ggplot2::labs(
     x = NULL, y = NULL,
-    title = "Frequencia de tweets publicados por candidatos nas eleicoes 2018",
-    subtitle = "Numero de publicacoes por mes",
+    title = "Frequ?ncia de tweets publicados por candidatos ?s elei??es 2018",
+    subtitle = "N?mero de publica??es por m?s",
     caption = "\nSource: Data collected from Twitter's REST API via rtweet"
   )
 
-
 # DATABASE CONNECTION
+
+mongoUrl <- URLencode(paste0("mongodb://",
+                             mongoUser, ":", mongoPasswd,
+                             "@", mongoHost, ":", mongoPort)
+)
 
 mongoConnection <- mongo(db = dbName,
                          collection = dbCollection,
