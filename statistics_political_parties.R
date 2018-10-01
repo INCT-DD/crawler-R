@@ -8,10 +8,11 @@ library("mongolite")
 source(config.R)
 source(infos.R)
 
+
 # APP PERSISTENCE DATA
 
-dbName <- "estatisticas"
-dbCollection <- "candidatos"
+dbName <- ""
+dbCollection <- ""
 
 # Statistical information on candidates
 info_candidates <- lookup_users(candidates_ids)
